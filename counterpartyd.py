@@ -212,16 +212,16 @@ def set_options (data_dir=None, bitcoind_rpc_connect=None, bitcoind_rpc_port=Non
     # Headless operation
     config.HEADLESS = headless
 
-def balances (address):
-    def get_btc_balance(address):
-        r = requests.get("https://blockchain.info/q/addressbalance/" + address)
-        # ^any other services that provide this?? (blockexplorer.com doesn't...)
-        try:
-            assert r.status_code == 200
-            return int(r.text) / float(config.UNIT)
-        except:
-            return "???"
+def get_btc_balance(address):
+    r = requests.get("https://blockchain.info/q/addressbalance/" + address)
+    # ^any other services that provide this?? (blockexplorer.com doesn't...)
+    try:
+        assert r.status_code == 200
+        return int(r.text) / float(config.UNIT)
+    except:
+        return "???"
 
+def balances (address):
     address_data = util.get_address(db, address=address)
 
     # Balances.
